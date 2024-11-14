@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dropzone Example</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/dropzone.min.css">
+  <style>
+    .dropzone {
+      text-align: center;
+      font-size: 18px;
+    }
+
+    .glyphicon-download {
+      font-size: 1.5em;
+    }
+
+    #DropZoneFiddle {
+      cursor: pointer;
+      border: 1px solid #000;
+      padding: 30px 0;
+    }
+  </style>
+</head>
+<body>
+
+<form action="" class="dropzone" id="DropZoneFiddle">
+  <span class="glyphicon glyphicon-download"></span>
+  <br/>
+</form>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/dropzone.min.js"></script>
+<script>
+  Dropzone.options.DropZoneFiddle = {
+    url: this.location,
+    paramName: "file",
+    clickable: true,
+    maxFilesize: 1,
+    uploadMultiple: true,
+    maxFiles: 10,
+    addRemoveLinks: true,
+    acceptedFiles: '.png,.jpg',
+    dictDefaultMessage: "Upload your files here",
+    init: function() {
+      this.on("sending", function(file, xhr, formData) {
+        formData.append("step", "upload");
+        formData.append("id", "1");
+      });
+      this.on("success", function(file, responseText) {
+        // Auto-remove files after successful upload
+        document.getElementById("div-files").innerHTML = responseText;
+        this.removeFile(file);
+      });
+    }
+  };
+</script>
+
+</body>
+</html>
